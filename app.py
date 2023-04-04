@@ -29,7 +29,23 @@ def health():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        inputs = predict_input_schema.load(request.get_json())
+        inputs = [predict_input_schema.load(request.get_json())]
+    except ValidationError as err:
+        return err.messages, 400
+    
+    try:
+        response = get_model_response(predict_input_schema=inputs)
+    except ValueError as e:
+        return {'error': str(e).split('\n')[-1].strip()}, 500
+
+    return jsonify(response)
+
+@app.route('/predict_batch', methods=['POST'])
+def predict_batch():
+    try:
+        inputs = []
+        for item in request.get_json()['batch']:
+            inputs.append(predict_input_schema.load(item))
     except ValidationError as err:
         return err.messages, 400
     
