@@ -1,260 +1,198 @@
 from marshmallow import Schema, fields
-from marshmallow.validate import OneOf, Range
+from marshmallow.validate import OneOf
 
 
 class PredictInputSchema(Schema):
 
-    estabelecimento_municipio = fields.Str(
-        required=True,
-        error_messages={'required': 'estabelecimento_municipio é obrigatório'},
-        attribute='EstabelecimentoMunicipio'
-    )
     tipificacao = fields.Str(
         required=True,
         error_messages={'required': 'tipificacao é obrigatório'},
+        validate=OneOf(
+            ['Macho Inteiro', 'Fêmea', 'Macho Castrado'],
+            error='tipificacao deve ser um dos seguintes valores: {choices}'
+        ),
         attribute='Tipificacao'
     )
-    maturidade = fields.Str(
+    qtd_animais_lote = fields.Integer(
         required=True,
-        error_messages={'required': 'maturidade é obrigatória'},
-        validate=OneOf(
-            ['d', '2', '4', '6', '8'],
-            labels=['Dente de leite', 'Dois dentes',
-                    'Quatro dentes', 'Seis dentes', 'Oito dentes'],
-            error='Maturidade deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
-        ),
-        attribute='Maturidade'
+        error_messages={
+            'required': 'qtd_animais_lote é obrigatório'},
+        attribute='QTD_ANIMAIS_LOTE'
     )
-    acabamento = fields.Str(
+    peso_medio_lote = fields.Float(
         required=True,
-        error_messages={'required': 'acabamento é obrigatório'},
-        attribute='Acabamento'
-    )
-    peso = fields.Float(
-        required=True,
-        error_messages={'required': 'peso é obrigatório'},
-        validate=Range(
-            min=123, max=516.400024, min_inclusive=True, max_inclusive=True, error='Peso deve estar entre 123 e 516.400024'
-        ),
-        attribute='Peso'
+        error_messages={'required': 'peso_medio_lote é obrigatório'},
+        attribute='PESO_MEDIO_LOTE'
     )
     questionario_classificacao_estabel = fields.Integer(
         required=True,
         error_messages={
             'required': 'questionario_classificacao_estabel é obrigatório'},
+        validate=OneOf(
+            [0, 21, 26, 30],
+            labels=['sem classificação', 'simples',
+                    'intermediário', 'avançado'],
+            error='questionario_classificacao_estabel deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
+        ),
         attribute='QuestionarioClassificacaoEstabel'
-    )
-    ferti_irrigacao = fields.Integer(
-        required=True,
-        error_messages={
-            'required': 'ferti_irrigacao é obrigatório'},
-        attribute='FERTIIRRIGACAO'
     )
     ilp = fields.Integer(
         required=True,
         error_messages={
             'required': 'ilp é obrigatório'},
+        validate=OneOf(
+            [0, 1],
+            labels=['não', 'sim'],
+            error='ilp deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
+        ),
         attribute='ILP'
     )
     ifp = fields.Integer(
         required=True,
         error_messages={
             'required': 'ifp é obrigatório'},
+        validate=OneOf(
+            [0, 1],
+            labels=['não', 'sim'],
+            error='ifp deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
+        ),
         attribute='IFP'
     )
     ilpf = fields.Integer(
         required=True,
         error_messages={
             'required': 'ilpf é obrigatório'},
+        validate=OneOf(
+            [0, 1],
+            labels=['não', 'sim'],
+            error='ilpf deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
+        ),
         attribute='ILPF'
-    )
-    concen_volum = fields.Integer(
-        required=True,
-        error_messages={
-            'required': 'concen_volum é obrigatório'},
-        attribute='CONCEN_VOLUM'
-    )
-    creep_feeding = fields.Integer(
-        required=True,
-        error_messages={
-            'required': 'creep_feeding é obrigatório'},
-        attribute='CREEPFEEDING'
-    )
-    forn_estrat_silagem = fields.Integer(
-        required=True,
-        error_messages={
-            'required': 'forn_estrat_silagem é obrigatório'},
-        attribute='FORN_ESTRAT_SILAGEM'
-    )
-    proteico = fields.Integer(
-        required=True,
-        error_messages={
-            'required': 'proteico é obrigatório'},
-        attribute='PROTEICO'
-    )
-    proteico_energetico = fields.Integer(
-        required=True,
-        error_messages={
-            'required': 'proteico_energetico é obrigatório'},
-        attribute='PROTEICO_ENERGETICO'
-    )
-    racao_bal_cons_inferior = fields.Integer(
-        required=True,
-        error_messages={
-            'required': 'racao_bal_cons_inferior é obrigatório'},
-        attribute='RACAO_BAL_CONS_INFERIOR'
-    )
-    sal_mineral = fields.Integer(
-        required=True,
-        error_messages={
-            'required': 'sal_mineral é obrigatório'},
-        attribute='SAL_MINERAL'
-    )
-    salmineral_ureia = fields.Integer(
-        required=True,
-        error_messages={
-            'required': 'salmineral_ureia é obrigatório'},
-        attribute='SALMINERAL_UREIA'
-    )
-    racaoo_bal_consumo_ig = fields.Integer(
-        required=True,
-        error_messages={
-            'required': 'racaoo_bal_consumo_ig é obrigatório'},
-        attribute='RACAOO_BAL_CONSUMO_IG'
-    )
-    grao_inteiro = fields.Integer(
-        required=True,
-        error_messages={
-            'required': 'grao_inteiro é obrigatório'},
-        attribute='GRAO_INTEIRO'
-    )
-    alto_concentr_volum = fields.Integer(
-        required=True,
-        error_messages={
-            'required': 'alto_concentr_volum é obrigatório'},
-        attribute='ALTO_CONCENTR_VOLUM'
-    )
-    alto_concentrado = fields.Integer(
-        required=True,
-        error_messages={
-            'required': 'alto_concentrado é obrigatório'},
-        attribute='ALTO_CONCENTRADO'
     )
     questionario_possui_outros_incentiv = fields.Integer(
         required=True,
         error_messages={
             'required': 'questionario_possui_outros_incentiv é obrigatório'},
+        validate=OneOf(
+            [0, 1],
+            labels=['não', 'sim'],
+            error='questionario_possui_outros_incentiv deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
+        ),
         attribute='QuestionarioPossuiOutrosIncentiv'
     )
     questionario_fabrica_racao = fields.Integer(
         required=True,
         error_messages={
             'required': 'questionario_fabrica_racao é obrigatório'},
+        validate=OneOf(
+            [0, 1],
+            labels=['não', 'sim'],
+            error='questionario_fabrica_racao deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
+        ),
         attribute='QuestionarioFabricaRacao'
     )
     regua_de_manejo = fields.Integer(
         required=True,
         error_messages={
             'required': 'regua_de_manejo é obrigatório'},
+        validate=OneOf(
+            [0, 1],
+            labels=['não', 'sim'],
+            error='regua_de_manejo deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
+        ),
         attribute='regua de manejo'
     )
     identificacao_individual = fields.Integer(
         required=True,
         error_messages={
             'required': 'identificacao_individual é obrigatório'},
+        validate=OneOf(
+            [0, 1],
+            labels=['não', 'sim'],
+            error='identificacao_individual deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
+        ),
         attribute='identificacao individual'
     )
     rastreamento_sisbov = fields.Integer(
         required=True,
         error_messages={
             'required': 'rastreamento_sisbov é obrigatório'},
+        validate=OneOf(
+            [0, 1],
+            labels=['não', 'sim'],
+            error='rastreamento_sisbov deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
+        ),
         attribute='rastreamento SISBOV'
-    )
-    bpa = fields.Integer(
-        required=True,
-        error_messages={
-            'required': 'bpa é obrigatório'},
-        attribute='BPA'
     )
     participa_de_aliancas_mercadolog = fields.Integer(
         required=True,
         error_messages={
             'required': 'participa_de_aliancas_mercadolog é obrigatório'},
+        validate=OneOf(
+            [0, 1],
+            labels=['não', 'sim'],
+            error='participa_de_aliancas_mercadolog deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
+        ),
         attribute='participa de aliancas mercadolog'
     )
     questionario_pratica_recuperacao_pa = fields.Integer(
         required=True,
         error_messages={
             'required': 'questionario_pratica_recuperacao_pa é obrigatória'},
+        validate=OneOf(
+            [0, 1],
+            labels=['não', 'sim'],
+            error='questionario_pratica_recuperacao_pa deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
+        ),
         attribute='QuestionarioPraticaRecuperacaoPa'
     )
     confinamento = fields.Integer(
         required=True,
         error_messages={
             'required': 'confinamento é obrigatório'},
+        validate=OneOf(
+            [0, 1],
+            labels=['não', 'sim'],
+            error='confinamento deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
+        ),
         attribute='Confinamento'
     )
     suplementacao_a_campo = fields.Integer(
         required=True,
         error_messages={
             'required': 'suplementacao_a_campo é obrigatório'},
+        validate=OneOf(
+            [0, 1],
+            labels=['não', 'sim'],
+            error='suplementacao_a_campo deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
+        ),
         attribute='Suplementacao_a_campo'
     )
     semi_confinamento = fields.Integer(
         required=True,
         error_messages={
             'required': 'semi_confinamento é obrigatório'},
+        validate=OneOf(
+            [0, 1],
+            labels=['não', 'sim'],
+            error='semi_confinamento deve ser um dos seguintes valores: {choices}\nSignificados: {labels}'
+        ),
         attribute='SemiConfinamento'
     )
-    med7d_form_itu_inst = fields.Float(
+    tot3m_chuva = fields.Float(
         required=True,
-        error_messages={'required': 'med7d_form_itu_inst é obrigatório'},
-        attribute='med7d_formITUinst'
-    )
-    med7d_prer_soja = fields.Float(
-        required=True,
-        error_messages={'required': 'med7d_prer_soja é obrigatória'},
-        attribute='med7d_preR_soja'
-    )
-    med7d_prer_milho = fields.Float(
-        required=True,
-        error_messages={'required': 'med7d_prer_milho é obrigatório'},
-        attribute='med7d_preR_milho'
-    )
-    med7d_prer_boi = fields.Float(
-        required=True,
-        error_messages={'required': 'med7d_prer_boi é obrigatório'},
-        attribute='med7d_preR_boi'
-    )
-    med1m_form_itu_inst = fields.Float(
-        required=True,
-        error_messages={'required': 'med1m_form_itu_inst é obrigatório'},
-        attribute='med1m_formITUinst'
-    )
-    med1m_prer_soja = fields.Float(
-        required=True,
-        error_messages={'required': 'med1m_prer_soja é obrigatória'},
-        attribute='med1m_preR_soja'
-    )
-    med1m_prer_milho = fields.Float(
-        required=True,
-        error_messages={'required': 'med1m_prer_milho é obrigatório'},
-        attribute='med1m_preR_milho'
-    )
-    med1m_prer_boi = fields.Float(
-        required=True,
-        error_messages={'required': 'med1m_prer_boi é obrigatório'},
-        attribute='med1m_preR_boi'
+        error_messages={'required': 'tot3m_chuva é obrigatório'},
+        attribute='tot3m_Chuva'
     )
     med3m_form_itu_inst = fields.Float(
         required=True,
         error_messages={'required': 'med3m_form_itu_inst é obrigatório'},
         attribute='med3m_formITUinst'
     )
-    med3m_prer_soja = fields.Float(
+    med3m_ndvi = fields.Float(
         required=True,
-        error_messages={'required': 'med3m_prer_soja é obrigatória'},
-        attribute='med3m_preR_soja'
+        error_messages={'required': 'med3m_ndvi é obrigatório'},
+        attribute='med3m_NDVI'
     )
     med3m_prer_milho = fields.Float(
         required=True,
@@ -265,77 +203,6 @@ class PredictInputSchema(Schema):
         required=True,
         error_messages={'required': 'med3m_prer_boi é obrigatório'},
         attribute='med3m_preR_boi'
-    )
-    med6m_form_itu_inst = fields.Float(
-        required=True,
-        error_messages={'required': 'med6m_form_itu_inst é obrigatório'},
-        attribute='med6m_formITUinst'
-    )
-    med6m_prer_soja = fields.Float(
-        required=True,
-        error_messages={'required': 'med6m_prer_soja é obrigatória'},
-        attribute='med6m_preR_soja'
-    )
-    med6m_prer_milho = fields.Float(
-        required=True,
-        error_messages={'required': 'med6m_prer_milho é obrigatório'},
-        attribute='med6m_preR_milho'
-    )
-    med6m_prer_boi = fields.Float(
-        required=True,
-        error_messages={'required': 'med6m_prer_boi é obrigatório'},
-        attribute='med6m_preR_boi'
-    )
-    med12m_form_itu_inst = fields.Float(
-        required=True,
-        error_messages={'required': 'med12m_form_itu_inst é obrigatório'},
-        attribute='med12m_formITUinst'
-    )
-    med12m_prer_soja = fields.Float(
-        required=True,
-        error_messages={'required': 'med12m_prer_soja é obrigatória'},
-        attribute='med12m_preR_soja'
-    )
-    med12m_prer_milho = fields.Float(
-        required=True,
-        error_messages={'required': 'med12m_prer_milho é obrigatório'},
-        attribute='med12m_preR_milho'
-    )
-    med12m_prer_boi = fields.Float(
-        required=True,
-        error_messages={'required': 'med12m_prer_boi é obrigatório'},
-        attribute='med12m_preR_boi'
-    )
-    cnt7d_cl_itu_inst = fields.Float(
-        required=True,
-        error_messages={'required': 'cnt7d_cl_itu_inst é obrigatório'},
-        attribute='cnt7d_CL_ITUinst'
-    )
-    cnt1m_cl_itu_inst = fields.Float(
-        required=True,
-        error_messages={'required': 'cnt1m_cl_itu_inst é obrigatório'},
-        attribute='cnt1m_CL_ITUinst'
-    )
-    cnt3m_cl_itu_inst = fields.Float(
-        required=True,
-        error_messages={'required': 'cnt3m_cl_itu_inst é obrigatório'},
-        attribute='cnt3m_CL_ITUinst'
-    )
-    cnt6m_cl_itu_inst = fields.Float(
-        required=True,
-        error_messages={'required': 'cnt6m_cl_itu_inst é obrigatório'},
-        attribute='cnt6m_CL_ITUinst'
-    )
-    cnt12m_cl_itu_inst = fields.Float(
-        required=True,
-        error_messages={'required': 'cnt12m_cl_itu_inst é obrigatório'},
-        attribute='cnt12m_CL_ITUinst'
-    )
-    ano = fields.Integer(
-        required=False,
-        load_default=2020,
-        # error_messages={'required': 'ano é obrigatório'},
-        attribute='ANO'
     )
 
 # class PredictInput():

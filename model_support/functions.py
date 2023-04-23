@@ -37,7 +37,7 @@ def get_model_response(predict_input_schema: dict) -> dict:
                 'class_probabilities': classes_probabilites
             })
         
-        response = {'batch': predictions}
+        response = {'multiple_batches': predictions}
     else:
         classes_probabilites = []
         for i in range(len(classes)):

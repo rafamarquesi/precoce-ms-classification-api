@@ -26,8 +26,8 @@ def health():
     """Return service health"""
     return 'ok'
 
-@app.route('/predict', methods=['POST'])
-def predict():
+@app.route('/predict_batch', methods=['POST'])
+def predict_batch():
     try:
         inputs = [predict_input_schema.load(request.get_json())]
     except ValidationError as err:
@@ -40,11 +40,11 @@ def predict():
 
     return jsonify(response)
 
-@app.route('/predict_batch', methods=['POST'])
-def predict_batch():
+@app.route('/predict_multiple_batches', methods=['POST'])
+def predict_multiple_batches():
     try:
         inputs = []
-        for item in request.get_json()['batch']:
+        for item in request.get_json()['multiple_batches']:
             inputs.append(predict_input_schema.load(item))
     except ValidationError as err:
         return err.messages, 400
