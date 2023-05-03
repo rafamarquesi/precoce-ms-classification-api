@@ -19,7 +19,6 @@ def get_model_response(predict_input_schema: dict) -> dict:
 
     label = target_encoded.inverse_transform(prediction)
     
-    # TODO: Add the probability of the prediction, classification confidence (verify if the model has predict_proba).
     prediction_proba = model.predict_proba(predict_data)
     classes = target_encoded.inverse_transform(model.classes_)
     
