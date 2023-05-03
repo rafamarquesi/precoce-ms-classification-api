@@ -1,0 +1,53 @@
+{
+    "boilerplate": "python-flask-nginx",
+    "platform": "python",
+    "label": "API em Python 3 com Flask e Nginx",
+    "description": "API em Python 3 com Flask e Nginx, implementado o modelo de aprendizado de máquina, gerado com a biblioteca scikit-learn em outro projeto, para classificação da qualidade do lote de animais a serem abatidos, para o projeto BovClass.",
+    "references": [
+        {
+            "label": "Site oficial do Python",
+            "url": "https://www.python.org/"
+        },
+        {
+            "label": "Site oficial do Flask",
+            "url": "https://flask.palletsprojects.com/"
+        },
+        {
+            "label": "Site oficial do Nginx",
+            "url": "https://www.nginx.com/"
+        }
+    ],
+    "maintainers": [
+        {
+            "name": "Rafael Rodrigues Marquesi",
+            "email": "rafael.marquesi@ufms.br",
+            "phone": "+55 (65) 9 9648-1733"
+        }
+    ],
+    "variables": {
+        "default": [
+            {
+                "name": "PORT",
+                "type": "PORT"
+            },
+            {
+                "name": "FLASK_DEBUG",
+                "value": "True",
+                "type": "TEXT"
+            }
+        ],
+        "alpha": [],
+        "beta": [],
+        "release": [
+            {
+                "name": "FLASK_DEBUG",
+                "value": "False",
+                "type": "TEXT"
+            }
+        ]
+    },
+    "orchestrators": [
+        "DockerCompose",
+        "DockerSwarm"
+    ]
+}
