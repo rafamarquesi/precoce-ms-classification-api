@@ -1,3 +1,5 @@
+import os
+
 from flask import request, jsonify
 
 from marshmallow import ValidationError
@@ -8,23 +10,20 @@ from model_support.predict_input_schema import PredictInputSchema
 
 predict_input_schema = PredictInputSchema()
 
-model_name = 'Precoce MS'
-version = 'v1.0.0'
-
 @app.route('/info', methods=['GET'])
 def info():
     """Return model information, version, how to call"""
     result = {}
 
-    result['name'] = model_name
-    result['version'] = version
+    result['stage'] = 'bovclass / api @ {}'.format(os.environ['FLASK_API_STAGE'])
+    result['version'] = os.environ['FLASK_API_VERSION']
 
-    return result
+    return jsonify(result)
 
-@app.route('/health', methods=['GET'])
-def health():
+@app.route('/status', methods=['GET'])
+def status():
     """Return service health"""
-    return 'ok'
+    return jsonify('ok')
 
 @app.route('/predict_batch', methods=['POST'])
 def predict_batch():

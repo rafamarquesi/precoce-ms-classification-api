@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  api:
+    image: 127.0.0.1:8000/${IO_PROJECT}_${IO_APP}_${IO_STAGE}_api
+    networks:
+      - stack
+    healthcheck:
+      test: curl --fail -s http://localhost:8000/status || exit 1
+      interval: 1m30s
+      timeout: 10s
+      start_period: 30s
+      retries: 4
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  nginx:
+    image: 127.0.0.1:80/${IO_PROJECT}_${IO_APP}_${IO_STAGE}_nginx
+    ports:
+      - ${PORT}:80
+    networks:
+      - stack
+    depends_on:
+      - api
+    healthcheck:
+      test: curl --fail -s http://localhost:80/status || exit 1
+      interval: 1m30s
+      timeout: 10s
+      start_period: 30s
+      retries: 4
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+networks:
+  stack:
+    external: true
+    name: ${IO_PROJECT}_${IO_APP}_${IO_STAGE}

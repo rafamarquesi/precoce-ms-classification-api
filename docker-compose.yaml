@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+  api:
+    image: 127.0.0.1:8000/${IO_PROJECT}_${IO_APP}_${IO_STAGE}_api
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+      args:
+        IO_SERVER: ${IO_SERVER}
+        IO_PROJECT: ${IO_PROJECT}
+        IO_APP: ${IO_APP}
+        IO_STAGE: ${IO_STAGE}
+        IO_VERSION: ${IO_VERSION}
+        IO_DEPLOYER: ${IO_DEPLOYER}
+        SENTRY_DSN: ${SENTRY_DSN}
+        MATOMO_ID: ${MATOMO_ID}
+        MATOMO_TOKEN: ${MATOMO_TOKEN}
+    networks:
+      - stack
+    restart: unless-stopped
+    healthcheck:
+      test: curl --fail -s http://localhost:8000/status || exit 1
+      interval: 1m30s
+      timeout: 10s
+      start_period: 30s
+      retries: 4
+
+  nginx:
+    image: 127.0.0.1:80/${IO_PROJECT}_${IO_APP}_${IO_STAGE}_nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+      args:
+        PORT: ${PORT}
+    ports:
+      - ${PORT}:80
+    networks:
+      - stack
+    restart: unless-stopped
+    depends_on:
+      - api
+    healthcheck:
+      test: curl --fail -s http://localhost:80/status || exit 1
+      interval: 1m30s
+      timeout: 10s
+      start_period: 30s
+      retries: 4
+
+  # TODO: verificar com camilo, no pwa estes dois serviços não existem, realmente necessários?
+  backup:
+    image: tianon/true
+    restart: "no"
+    profiles:
+      - cli
+
+  restore:
+    image: tianon/true
+    restart: "no"
+    profiles:
+      - cli
+
+networks:
+  stack:
+    external: true
+    name: ${IO_PROJECT}_${IO_APP}_${IO_STAGE}
