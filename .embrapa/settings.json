@@ -1,5 +1,5 @@
 {
-    "boilerplate": "python-flask-nginx",
+    "boilerplate": "_",
     "platform": "python",
     "label": "API em Python 3 com Flask e Nginx",
     "description": "API em Python 3 com Flask e Nginx, implementado o modelo de aprendizado de máquina, gerado com a biblioteca scikit-learn em outro projeto, para classificação da qualidade do lote de animais a serem abatidos, para o projeto BovClass.",
