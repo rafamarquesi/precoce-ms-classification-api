@@ -130,3 +130,5 @@ dmypy.json
 
 # Personal
 test_app.http
+.env
+.env.ci

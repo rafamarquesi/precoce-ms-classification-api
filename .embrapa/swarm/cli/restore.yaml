@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+  # TODO: verificar com camilo, no pwa estes dois serviços não existem, realmente necessários?
+  restore:
+    image: tianon/true
+    deploy:
+      restart_policy:
+        condition: none
