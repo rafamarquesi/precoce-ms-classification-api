@@ -47,7 +47,6 @@ services:
       start_period: 30s
       retries: 4
 
-  # TODO: verificar com camilo, no pwa estes dois serviços não existem, realmente necessários?
   backup:
     image: tianon/true
     restart: "no"
@@ -55,6 +54,18 @@ services:
       - cli
 
   restore:
+    image: tianon/true
+    restart: "no"
+    profiles:
+      - cli
+
+  test:
+    image: tianon/true
+    restart: "no"
+    profiles:
+      - cli
+
+  sanitize:
     image: tianon/true
     restart: "no"
     profiles:

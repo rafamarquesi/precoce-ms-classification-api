@@ -20,12 +20,11 @@ sentry_sdk.init(
 app = Flask(__name__)
 
 # Initialize Matomo
-# TODO: verificar com camilo, está dando erro flask_matomo.MatomoError: Status code: 400 ao tentar acessar a URL https://hit.embrapa.io/piwik.php, somente domínios específicos que podem acessar?
 matomo = Matomo(
     app=app,
     matomo_url='https://hit.embrapa.io',
     id_site=int(os.environ['FLASK_API_MATOMO_ID']),
-    token_auth=os.environ['FLASK_API_MATOMO_TOKEN'] # TODO: verificar com camilo, The token_auth parameter can be found in the area API in the settings of Matomo. It is required for tracking the ip address
+    token_auth=os.environ['FLASK_API_MATOMO_TOKEN']
 )
 
 # Load the model
